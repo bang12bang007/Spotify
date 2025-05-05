@@ -1,0 +1,52 @@
+name: flutter_application_1
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0-231.0.dev <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  url_launcher: ^6.3.1
+  flutter_bloc:
+  hydrated_bloc:
+  path_provider: ^2.0.14
+  flutter_svg: ^2.0.0
+  firebase_auth: 
+  get_it:
+  flutter_localizations:
+    sdk: flutter
+  firebase_core: ^3.4.0
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Khai báo các tài nguyên sử dụng trong dự án
+  assets:
+    - lib/assets/fonts/
+    - lib/assets/images/
+    - lib/assets/vectors/
+
+
+  # Khai báo custom fonts
+  fonts:
+    - family: OpenSans
+      fonts:
+        - asset: lib/assets/fonts/OpenSans-Bold.ttf
+        - asset: lib/assets/fonts/OpenSans-BoldItalic.ttf
+        - asset: lib/assets/fonts/OpenSans-ExtraBold.ttf
+        - asset: lib/assets/fonts/OpenSans-ExtraBoldItalic.ttf
+        - asset: lib/assets/fonts/OpenSans-Italic.ttf
+        - asset: lib/assets/fonts/OpenSans-Light.ttf
+        - asset: lib/assets/fonts/OpenSans-LightItalic.ttf
+        - asset: lib/assets/fonts/OpenSans-Regular.ttf
+        - asset: lib/assets/fonts/OpenSans-Semibold.ttf
+        - asset: lib/assets/fonts/OpenSans-SemiboldItalic.ttf
