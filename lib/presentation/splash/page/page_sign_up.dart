@@ -1,72 +1,94 @@
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/assets/image.dart';
 import 'package:flutter_application_1/core/configs/theme/app_colors.dart';
+import 'package:flutter_application_1/data/model/auth/create_user_rq.dart';
+import 'package:flutter_application_1/domains/usecase/signUp_usecase.dart';
+import 'package:flutter_application_1/getIt.dart';
 import 'package:flutter_application_1/presentation/splash/page/page_home.dart';
-import 'package:flutter_application_1/presentation/splash/page/page_loading.dart';
 import 'package:flutter_application_1/presentation/splash/page/page_sign_in.dart';
 import 'package:flutter_application_1/presentation/splash/widget/util_appbar.dart';
 import 'package:flutter_application_1/presentation/splash/widget/util_button.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignIn extends StatefulWidget {
+  const SignIn({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final _loginField = TextEditingController();
+class _SignInState extends State<SignIn> {
+  final _signIn = TextEditingController();
   final _passField = TextEditingController();
+  final _repassField = TextEditingController();
   bool _isPasswordVisible = false;
-  final _firebaseAuth = FirebaseAuth.instance;
+  final bool _isPasswordError = false;
+  final bool _isrePasswordError = false;
+  // bool _isSignInError = false;
   @override
   void dispose() {
-    _loginField.dispose();
+    _signIn.dispose();
     _passField.dispose();
+    _repassField.dispose();
     super.dispose();
   }
 
-  void signIn() async {
-    final String email = _loginField.text.trim();
-    final String password = _passField.text.trim();
-    if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Email hoặc mật khẩu không được để trống"),
-        ),
-      );
-      return;
+  late final UserCredential userCredential;
+  final _firebase = FirebaseAuth.instance;
+  bool checkPass() {
+    String pass = _passField.text;
+    String repass = _repassField.text;
+    if (pass != repass) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Mật khẩu không trùng khớp"),
+      ));
+      ScaffoldMessenger.of(context).clearSnackBars();
+      return false;
     }
+    if (pass.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Mật khẩu phải lớn hơn 6 ký tự"),
+      ));
+      ScaffoldMessenger.of(context).clearSnackBars();
+      return false;
+    }
+    return true;
+  }
+
+  void checkRePass() async {
+    checkPass();
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const HomePage()));
+      userCredential = await _firebase.createUserWithEmailAndPassword(
+        email: _signIn.text.trim(),
+        password: _passField.text.trim(),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Bạn đã đăng ký thành công"),
+      ));
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const HomePage()), // Thay HomePage bằng trang bạn muốn điều hướng đến
+      // );
     } on FirebaseAuthException catch (error) {
-      String message = "Đăng nhập thất bại";
-      if (error.code == "user-not-found") {
-        message = "Không tìm thấy tài khoản";
+      String errorMessage = "Đã xảy ra lỗi, vui lòng thử lại.";
+      if (error.code == 'email-already-in-use') {
+        errorMessage = "Email đã tồn tại.";
+      } else if (error.code == 'weak-password') {
+        errorMessage = "Mật khẩu quá yếu.";
+      } else if (error.code == 'invalid-email') {
+        errorMessage = "Email không hợp lệ.";
       }
-      if (error.code == "wrong-password") {
-        message = "Sai mật khẩu";
-      }
-      if (error.code == "invalid-email") {
-        message = "Email không hợp lệ";
-      }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-        ),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(errorMessage),
+      ));
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Đã có lỗi xảy ra"),
-        ),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Đã xảy ra lỗi, vui lòng thử lại."),
+      ));
     }
   }
 
@@ -84,17 +106,17 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           const SizedBox(
-            height: 30,
+            height: 10,
           ),
           Text(
-            "Đăng nhập",
+            "Đăng ký",
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium
                 ?.copyWith(fontSize: 30, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -125,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: [
                 TextField(
-                  controller: _loginField,
+                  controller: _signIn,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelStyle: const TextStyle(color: Colors.black),
@@ -143,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 25,
+                  height: 15,
                 ),
                 TextField(
                   controller: _passField,
@@ -154,8 +176,43 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: 'Mật khẩu',
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.grey),
+                      borderSide: BorderSide(
+                          color: _isPasswordError ? Colors.red : Colors.grey),
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide:
+                          const BorderSide(color: AppColors.primary, width: 2),
+                    ),
+                    fillColor: AppColors.primary,
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                      icon: _isPasswordVisible
+                          ? const Icon(Icons.remove_red_eye_outlined)
+                          : const Icon(Icons.remove_red_eye),
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextField(
+                  controller: _repassField,
+                  obscureText: !_isPasswordVisible,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    labelStyle: const TextStyle(color: Colors.black),
+                    hintText: 'Nhập lại mật khẩu',
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                            color:
+                                _isrePasswordError ? Colors.red : Colors.grey)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide:
@@ -178,29 +235,38 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "Quên mật khẩu?",
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 15),
-                  ),
-                ),
                 const SizedBox(
                   height: 20,
                 ),
                 UtilButton(
-                  text: "Đăng nhập",
-                  onPressed: () {
-                    signIn();
+                  text: "Đăng Ký",
+                  onPressed: () async {
+                    var result = await getIt<SignupUsecase>().call(CreateUserRq(
+                      email: _signIn.text.toString(),
+                      password: _passField.text.toString(),
+                    ));
+                    print(result);
+                    if (checkPass() == false) {
+                      result.fold((l) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(l),
+                        ));
+                      }, (r) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(r.toString()),
+                          ),
+                        );
+                        // MaterialPageRoute(
+                        //   builder: (context) => const HomePage(),
+                        // );
+                      });
+                    }
                   },
                   height: 70,
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 Container(
                   height: 2,
@@ -208,7 +274,7 @@ class _LoginPageState extends State<LoginPage> {
                   color: Colors.grey,
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -217,11 +283,11 @@ class _LoginPageState extends State<LoginPage> {
                       style: ButtonStyle(
                         iconSize: MaterialStateProperty.all(70),
                       ),
-                      onPressed: test,
+                      onPressed: checkRePass,
                       icon: const Icon(Icons.apple),
                     ),
                     IconButton(
-                      onPressed: signIn,
+                      onPressed: null,
                       icon: SvgPicture.asset(
                         ImageUtils.gg,
                         width: 50,
@@ -232,13 +298,13 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Chưa có tài khoản? ",
+                      "Bạn đã có tài khoản? ",
                     ),
                     TextButton(
                         style: TextButton.styleFrom(
@@ -250,10 +316,10 @@ class _LoginPageState extends State<LoginPage> {
                               context,
                               MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const SignIn()));
+                                      const LoginPage()));
                         },
                         child: const Text(
-                          "Đăng ký ngay",
+                          "Đăng nhập",
                           style: TextStyle(color: AppColors.primary),
                         ))
                   ],
@@ -275,8 +341,4 @@ Future<void> _launchURL() async {
   } else {
     throw 'Cound not launch';
   }
-}
-
-void test() {
-  print("Oke");
 }

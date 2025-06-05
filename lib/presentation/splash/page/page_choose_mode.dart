@@ -3,7 +3,7 @@ import 'package:flutter_application_1/assets/image.dart';
 import 'package:flutter_application_1/presentation/splash/widget/util_appbar.dart';
 import 'package:flutter_application_1/presentation/splash/widget/util_button.dart';
 import 'package:flutter_application_1/presentation/splash/bloc/theme_cubit.dart';
-import 'package:flutter_application_1/presentation/splash/page/page_login.dart';
+import 'package:flutter_application_1/presentation/splash/page/page_sign_in.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';

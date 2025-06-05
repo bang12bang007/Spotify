@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/configs/theme/app_theme.dart';
+import 'package:flutter_application_1/getIt.dart';
 import 'package:flutter_application_1/presentation/splash/bloc/language_cubit.dart';
 import 'package:flutter_application_1/presentation/splash/bloc/theme_cubit.dart';
 import 'package:flutter_application_1/presentation/splash/page/page_loading.dart';
@@ -13,15 +14,20 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  HydratedBloc.storage = await HydratedStorage.build(
+
+  // Đảm bảo HydratedBloc được khởi tạo trước khi chạy app
+  final storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorage.webStorageDirectory
         : await getApplicationDocumentsDirectory(),
   );
+  HydratedBloc.storage = storage;
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // await initializeDependencies();
+  await setupDependencies();
   runApp(const MyApp());
 }
 
@@ -33,7 +39,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => ThemeCubit()),
-        BlocProvider(create: (_) => LanguageCubit())
+        BlocProvider(create: (_) => LanguageCubit()),
       ],
       child: BlocBuilder<LanguageCubit, Locale>(
           builder: (context, locale) => BlocBuilder<ThemeCubit, ThemeMode>(

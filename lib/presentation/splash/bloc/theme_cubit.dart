@@ -19,7 +19,7 @@ class ThemeCubit extends HydratedCubit<ThemeMode> {
       case 'system':
         return ThemeMode.system;
       default:
-        return null;
+        return ThemeMode.system;
     }
   }
 
