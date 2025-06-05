@@ -5,19 +5,7 @@ import 'package:flutter_application_1/data/model/auth/create_user_rq.dart';
 abstract class AuthenService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   Future<Either<String, User?>> signInWithEmailAndPassword(
-      String email, String password) async {
-    try {
-      final UserCredential userCredential =
-          await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      return Right(userCredential.user);
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
-
+      String email, String password);
   Future<Either> createUserWithEmailAndPassword(CreateUserRq createUserRq);
   Future<void> signOut();
   Future<bool> isSignedIn();
@@ -28,7 +16,7 @@ class AuthenServiceImpl extends AuthenService {
   Future<Either> createUserWithEmailAndPassword(
       CreateUserRq createUserRq) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await _firebaseAuth.createUserWithEmailAndPassword(
           email: createUserRq.email, password: createUserRq.password);
 
       return const Right('success');
@@ -69,7 +57,7 @@ class AuthenServiceImpl extends AuthenService {
   }
 
   @override
-  Future<void> signOut() {
-    throw UnimplementedError();
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
   }
 }

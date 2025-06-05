@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/configs/theme/app_theme.dart';
 import 'package:flutter_application_1/getIt.dart';
-import 'package:flutter_application_1/presentation/splash/bloc/language_cubit.dart';
-import 'package:flutter_application_1/presentation/splash/bloc/theme_cubit.dart';
+import 'package:flutter_application_1/presentation/splash/bloc/language/language_cubit.dart';
+import 'package:flutter_application_1/presentation/splash/bloc/theme/theme_cubit.dart';
 import 'package:flutter_application_1/presentation/splash/page/page_loading.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -14,8 +14,6 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Đảm bảo HydratedBloc được khởi tạo trước khi chạy app
   final storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorage.webStorageDirectory
@@ -26,7 +24,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // await initializeDependencies();
+  // gọi bên hàm getIT để khởi tạo các dependencies
   await setupDependencies();
   runApp(const MyApp());
 }

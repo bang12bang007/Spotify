@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/configs/theme/app_colors.dart';
-import 'package:flutter_application_1/presentation/splash/bloc/theme_cubit.dart';
+import 'package:flutter_application_1/presentation/splash/bloc/theme/theme_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UtilButton extends StatelessWidget {

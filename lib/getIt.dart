@@ -3,6 +3,7 @@ import 'package:flutter_application_1/domains/repository/auth/authen_repository.
 import 'package:flutter_application_1/domains/source/auth/authen_service.dart';
 import 'package:flutter_application_1/domains/usecase/signIn_usecase.dart';
 import 'package:flutter_application_1/domains/usecase/signUp_usecase.dart';
+import 'package:flutter_application_1/presentation/splash/bloc/auth/authentication_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -20,5 +21,8 @@ Future<void> setupDependencies() async {
   );
   getIt.registerSingleton<SigninUsecase>(
     SigninUsecase(getIt<AuthenRepository>()),
+  );
+  getIt.registerSingleton<AuthenticationBloc>(
+    AuthenticationBloc(getIt<SigninUsecase>()),
   );
 }
