@@ -1,16 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/core/configs/theme/app_theme.dart';
-import 'package:flutter_application_1/getIt.dart';
-import 'package:flutter_application_1/presentation/splash/bloc/language/language_cubit.dart';
-import 'package:flutter_application_1/presentation/splash/bloc/theme/theme_cubit.dart';
-import 'package:flutter_application_1/presentation/splash/page/page_loading.dart';
+import 'package:flutter_application_1/src/core/domains/configs/theme/app_theme.dart';
+import 'package:flutter_application_1/src/core/presentations/bloc/language/language_cubit.dart';
+import 'package:flutter_application_1/src/core/presentations/bloc/theme/theme_cubit.dart';
+import 'package:flutter_application_1/src/core/presentations/screens/page_loading.dart';
+import 'package:flutter_application_1/src/shared/firebase_options.dart';
+import 'package:flutter_application_1/src/shared/getIt.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
