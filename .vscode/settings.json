@@ -1,6 +1,7 @@
 {
-    "files.autoSave": "afterDelay",
-    "dart.flutterHotReloadOnSave": "manual",
-    "dart.hotReloadOnSave": "manual",
-    "dart.flutterGenerateLocalizationsOnSave": "manual"
+  "files.autoSave": "afterDelay",
+  "dart.flutterHotReloadOnSave": "manual",
+  "dart.hotReloadOnSave": "manual",
+  "dart.flutterGenerateLocalizationsOnSave": "manual",
+  "dart.flutterSdkPath": ".fvm/versions/3.24.0"
 }

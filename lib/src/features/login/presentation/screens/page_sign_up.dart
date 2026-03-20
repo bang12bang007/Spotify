@@ -1,17 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/assets/image.dart';
-import 'package:flutter_application_1/core/configs/theme/app_colors.dart';
 import 'package:flutter_application_1/data/model/auth/create_user_rq.dart';
-import 'package:flutter_application_1/domains/usecase/signUp_usecase.dart';
-import 'package:flutter_application_1/getIt.dart';
-import 'package:flutter_application_1/presentation/splash/page/page_home.dart';
-import 'package:flutter_application_1/presentation/splash/page/page_sign_in.dart';
-import 'package:flutter_application_1/presentation/splash/widget/util_appbar.dart';
-import 'package:flutter_application_1/presentation/splash/widget/util_button.dart';
+import 'package:flutter_application_1/generates/assets.gen.dart';
+import 'package:flutter_application_1/src/features/login/presentation/screens/page_sign_in.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../core/common/widgets/common_appbar.dart';
+import '../../../../core/common/widgets/common_button.dart';
+import '../../../../core/domains/configs/theme/app_colors.dart';
+import '../../../../core/domains/usecase/signUp_usecase.dart';
+import '../../../../shared/getIt.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -27,6 +27,7 @@ class _SignInState extends State<SignIn> {
   bool _isPasswordVisible = false;
   final bool _isPasswordError = false;
   final bool _isrePasswordError = false;
+
   // bool _isSignInError = false;
   @override
   void dispose() {
@@ -38,6 +39,7 @@ class _SignInState extends State<SignIn> {
 
   late final UserCredential userCredential;
   final _firebase = FirebaseAuth.instance;
+
   bool checkPass() {
     String pass = _passField.text;
     String repass = _repassField.text;
@@ -97,13 +99,9 @@ class _SignInState extends State<SignIn> {
     return Scaffold(
       body: Column(
         children: [
-          const UtilAppBar(),
+          const AppAppBar(),
           Center(
-            child: SvgPicture.asset(
-              ImageUtils.logo,
-              width: 60,
-              height: 60,
-            ),
+            child: Assets.svg.logo.svg(width: 60),
           ),
           const SizedBox(
             height: 10,
@@ -238,10 +236,10 @@ class _SignInState extends State<SignIn> {
                 const SizedBox(
                   height: 20,
                 ),
-                UtilButton(
+                CommonButton(
                   text: "Đăng Ký",
                   onPressed: () async {
-                    var result = await getIt<SignupUsecase>().call(CreateUserRq(
+                    var result = await getIt<SignUpUseCase>().call(CreateUserRq(
                       email: _signIn.text.toString(),
                       password: _passField.text.toString(),
                     ));
@@ -286,15 +284,7 @@ class _SignInState extends State<SignIn> {
                       onPressed: checkRePass,
                       icon: const Icon(Icons.apple),
                     ),
-                    IconButton(
-                      onPressed: null,
-                      icon: SvgPicture.asset(
-                        ImageUtils.gg,
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
+                    Assets.images.gg.image(),
                   ],
                 ),
                 const SizedBox(

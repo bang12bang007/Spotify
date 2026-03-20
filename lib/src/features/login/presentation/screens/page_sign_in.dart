@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/assets/image.dart';
-import 'package:flutter_application_1/core/configs/theme/app_colors.dart';
-import 'package:flutter_application_1/domains/usecase/signIn_usecase.dart';
-import 'package:flutter_application_1/getIt.dart';
-import 'package:flutter_application_1/presentation/splash/bloc/auth/authen_state.dart';
-import 'package:flutter_application_1/presentation/splash/bloc/auth/authentication_bloc.dart';
-import 'package:flutter_application_1/presentation/splash/page/page_home.dart';
-import 'package:flutter_application_1/presentation/splash/page/page_sign_up.dart';
-import 'package:flutter_application_1/presentation/splash/widget/util_appbar.dart';
-import 'package:flutter_application_1/presentation/splash/widget/util_button.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_application_1/generates/assets.gen.dart';
+import 'package:flutter_application_1/src/features/login/presentation/screens/page_sign_up.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../core/common/widgets/common_appbar.dart';
+import '../../../../core/common/widgets/common_button.dart';
+import '../../../../core/domains/configs/theme/app_colors.dart';
+import '../../../../core/domains/usecase/signIn_usecase.dart';
+import '../../../../core/presentations/bloc/auth/authen_state.dart';
+import '../../../../core/presentations/bloc/auth/authentication_bloc.dart';
+import '../../../../core/presentations/screens/page_home.dart';
+import '../../../../shared/getIt.dart' show getIt;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -60,13 +60,9 @@ class _LoginPageState extends State<LoginPage> {
                 snapshot.hasData ? snapshot.data : AuthenState.initial;
             return Column(
               children: [
-                const UtilAppBar(),
+                const AppAppBar(),
                 Center(
-                  child: SvgPicture.asset(
-                    ImageUtils.logo,
-                    width: 60,
-                    height: 60,
-                  ),
+                  child: Assets.svg.logo.svg(width: 60)
                 ),
                 const SizedBox(
                   height: 30,
@@ -177,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(
                         height: 20,
                       ),
-                      UtilButton(
+                      CommonButton(
                         text: "Đăng nhập",
                         onPressed: () async {
                           if (_loginField.text.isEmpty ||
@@ -187,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                                     content: Text(
                                         "Vui long nhap day du thong tin")));
                           } else {
-                            final result = await getIt<SigninUsecase>()
+                            final result = await getIt<SignInUseCase>()
                                 .call('${_loginField.text},${_passField.text}');
                             result.fold((l) {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -218,20 +214,12 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           IconButton(
                             style: ButtonStyle(
-                              iconSize: WidgetStateProperty.all(70),
+                              iconSize: MaterialStateProperty.all(70),
                             ),
                             onPressed: test,
                             icon: const Icon(Icons.apple),
                           ),
-                          IconButton(
-                            onPressed: null,
-                            icon: SvgPicture.asset(
-                              ImageUtils.gg,
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
+                          Assets.images.gg.image(),
                         ],
                       ),
                       const SizedBox(

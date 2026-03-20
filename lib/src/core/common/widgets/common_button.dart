@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/core/configs/theme/app_colors.dart';
-import 'package:flutter_application_1/presentation/splash/bloc/theme/theme_cubit.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UtilButton extends StatelessWidget {
+import '../../domains/configs/theme/app_colors.dart';
+import '../../presentations/bloc/theme/theme_cubit.dart';
+
+class CommonButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final double? height;
 
-  const UtilButton({
+  const CommonButton({
     super.key,
     required this.text,
     required this.onPressed,
@@ -25,14 +27,14 @@ class UtilButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: defaultStyle?.copyWith(
-        minimumSize: WidgetStateProperty.all(Size.fromHeight(height ?? 22)),
-        backgroundColor: WidgetStateProperty.all(AppColors.primary),
-        foregroundColor: WidgetStateProperty.all(themeMode == ThemeMode.system
+        minimumSize: MaterialStateProperty.all(Size.fromHeight(height ?? 22)),
+        backgroundColor: MaterialStateProperty.all(AppColors.primary),
+        foregroundColor: MaterialStateProperty.all(themeMode == ThemeMode.system
             ? Colors.white
             : themeMode == ThemeMode.light
                 ? Colors.black
                 : Colors.white),
-        shape: WidgetStateProperty.all(
+        shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(222),
           ),

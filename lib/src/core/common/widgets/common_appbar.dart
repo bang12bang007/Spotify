@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class UtilAppBar extends StatefulWidget {
-  const UtilAppBar({super.key});
+class AppAppBar extends StatefulWidget {
+  const AppAppBar({super.key});
 
   @override
-  State<UtilAppBar> createState() => _UtilAppBarState();
+  State<AppAppBar> createState() => _AppAppBarState();
 }
 
-class _UtilAppBarState extends State<UtilAppBar> {
+class _AppAppBarState extends State<AppAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(

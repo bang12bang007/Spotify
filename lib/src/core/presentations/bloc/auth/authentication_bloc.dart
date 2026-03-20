@@ -1,15 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter_application_1/data/model/auth/create_user_rq.dart';
-import 'package:flutter_application_1/domains/usecase/signIn_usecase.dart';
-import 'package:flutter_application_1/presentation/splash/bloc/auth/authen_state.dart';
+
+import '../../../../core/domains/usecase/signIn_usecase.dart';
+import 'authen_state.dart';
 
 class AuthenticationBloc {
-  late final SigninUsecase _signinUsecase;
+  late final SignInUseCase _signInUseCase;
   final _authStateController = StreamController<AuthenState>.broadcast();
   final _errorController = StreamController<String>.broadcast();
 
-  AuthenticationBloc(this._signinUsecase);
+  AuthenticationBloc(this._signInUseCase);
   Stream<AuthenState> get authSate => _authStateController.stream;
   Stream<String> get error => _errorController.stream;
 
@@ -17,7 +18,7 @@ class AuthenticationBloc {
     try {
       _authStateController.add(AuthenState.loading);
       final rq = CreateUserRq(email: email, password: password);
-      final result = await _signinUsecase.call(rq.toString());
+      final result = await _signInUseCase.call(rq.toString());
       result.fold((l) {
         _errorController.add(
           l.toString(),

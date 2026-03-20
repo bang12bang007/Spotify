@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/assets/image.dart';
-import 'package:flutter_application_1/core/configs/theme/app_colors.dart';
-import 'package:flutter_application_1/presentation/splash/page/page_started.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_application_1/generates/assets.gen.dart';
+import 'package:flutter_application_1/src/core/presentations/screens/page_started.dart';
+
+import '../../domains/configs/theme/app_colors.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
@@ -23,11 +23,7 @@ class _LoadingPageState extends State<LoadingPage> {
     return Scaffold(
       backgroundColor: AppColors.darkColorSystem,
       body: Center(
-        child: SvgPicture.asset(
-          ImageUtils.logo,
-          height: 60,
-          width: 60,
-        ),
+        child: Assets.svg.logo.svg(),
       ),
     );
   }

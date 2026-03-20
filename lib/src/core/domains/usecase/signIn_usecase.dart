@@ -1,10 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_application_1/core/usecase/usecase.dart';
-import 'package:flutter_application_1/domains/repository/auth/authen_repository.dart';
 
-class SigninUsecase implements UseCase<Either, String> {
+
+import '../../infrastructure/repository/authen_repository.dart';
+import '../../usecase/usecase.dart';
+
+class SignInUseCase implements UseCase<Either, String> {
   final AuthenRepository _authenRepository;
-  SigninUsecase(this._authenRepository);
+  SignInUseCase(this._authenRepository);
 
   @override
   Future<Either<dynamic, dynamic>> call(String params) async {
