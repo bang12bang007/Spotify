@@ -76,11 +76,13 @@ class _SignInState extends State<SignIn> {
       //   MaterialPageRoute(builder: (context) => const HomePage()), // Thay HomePage bằng trang bạn muốn điều hướng đến
       // );
     } on FirebaseAuthException catch (error) {
-      String errorMessage = "Đã xảy ra lỗi, vui lòng thử lại.";
-      if (error.code == 'email-already-in-use') {
+      String errorMessage = "Đã xảy ra lỗi, vui lòng thử lại.iiiii";
+      if (error.code == 'email-already-in-use(Email này đã tồn tại)') {
         errorMessage = "Email đã tồn tại.";
       } else if (error.code == 'weak-password') {
         errorMessage = "Mật khẩu quá yếu.";
+      } else if (error.code == 'network-request-failed') {
+        errorMessage = "Không có kết nối mạng.";
       } else if (error.code == 'invalid-email') {
         errorMessage = "Email không hợp lệ.";
       }
