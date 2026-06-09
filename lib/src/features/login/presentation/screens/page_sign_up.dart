@@ -77,10 +77,12 @@ class _SignInState extends State<SignIn> {
       // );
     } on FirebaseAuthException catch (error) {
       String errorMessage = "Đã xảy ra lỗi, vui lòng thử lại.iiiii";
-      if (error.code == 'email-already-in-use') {
+      if (error.code == 'email-already-in-use(Email này đã tồn tại)') {
         errorMessage = "Email đã tồn tại.";
       } else if (error.code == 'weak-password') {
         errorMessage = "Mật khẩu quá yếu.";
+      } else if (error.code == 'network-request-failed') {
+        errorMessage = "Không có kết nối mạng.";
       } else if (error.code == 'invalid-email') {
         errorMessage = "Email không hợp lệ.";
       }
