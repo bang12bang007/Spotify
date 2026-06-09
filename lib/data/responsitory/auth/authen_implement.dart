@@ -4,43 +4,48 @@ import 'package:flutter_application_1/data/model/auth/create_user_rq.dart';
 
 import '../../../src/core/domains/source/auth/authen_service.dart';
 import '../../../src/core/infrastructure/repository/authen_repository.dart';
-import '../../../src/shared/getIt.dart';
 
+class AuthenImplement implements AuthenRepository {
+  final AuthenService authenService;
 
-class AuthenImplement extends AuthenRepository {
-  @override
-  Future<Either> createUserWithEmailAndPassword(
-      CreateUserRq createUserRq) async {
-    try {
-      return await getIt<AuthenService>()
-          .createUserWithEmailAndPassword(createUserRq);
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
+  AuthenImplement(this.authenService);
 
   @override
-  Future<bool> isSignedIn() {
-    throw UnimplementedError();
+  Future<Either<String, User?>> createUserWithEmailAndPassword(
+    CreateUserRq createUserRq,
+  ) {
+    return authenService.createUserWithEmailAndPassword(
+      createUserRq,
+    );
   }
 
   @override
   Future<User?> signInWithEmailAndPassword(
-      String email, String password) async {
-    try {
-      final result = await getIt<AuthenService>()
-          .signInWithEmailAndPassword(email, password);
-      return result.fold(
-        (l) => throw Exception(l),
-        (r) => r,
-      );
-    } catch (e) {
-      throw Exception(e);
-    }
+    String email,
+    String password,
+  ) async {
+    final result = await authenService.signInWithEmailAndPassword(
+      email,
+      password,
+    );
+
+    return result.fold(
+      (message) {
+        throw Exception(message);
+      },
+      (user) {
+        return user;
+      },
+    );
+  }
+
+  @override
+  Future<bool> isSignedIn() {
+    return authenService.isSignedIn();
   }
 
   @override
   Future<void> signOut() {
-    throw UnimplementedError();
+    return authenService.signOut();
   }
 }
