@@ -76,7 +76,7 @@ class _SignInState extends State<SignIn> {
       //   MaterialPageRoute(builder: (context) => const HomePage()), // Thay HomePage bằng trang bạn muốn điều hướng đến
       // );
     } on FirebaseAuthException catch (error) {
-      String errorMessage = "Đã xảy ra lỗi, vui lòng thử lại.";
+      String errorMessage = "Đã xảy ra lỗi, vui lòng thử lại.iiiii";
       if (error.code == 'email-already-in-use') {
         errorMessage = "Email đã tồn tại.";
       } else if (error.code == 'weak-password') {
