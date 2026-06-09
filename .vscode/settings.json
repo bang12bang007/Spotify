@@ -3,5 +3,5 @@
   "dart.flutterHotReloadOnSave": "manual",
   "dart.hotReloadOnSave": "manual",
   "dart.flutterGenerateLocalizationsOnSave": "manual",
-  "dart.flutterSdkPath": ".fvm/versions/3.24.0"
+  "dart.flutterSdkPath": ".fvm/versions/3.41.0"
 }
