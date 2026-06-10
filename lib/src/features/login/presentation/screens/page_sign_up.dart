@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/model/auth/create_user_rq.dart';
 import 'package:flutter_application_1/generates/assets.gen.dart';
 import 'package:flutter_application_1/src/features/login/presentation/screens/page_sign_in.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/common/widgets/common_appbar.dart';
@@ -84,6 +83,7 @@ class _SignInState extends State<SignIn> {
       } else if (error.code == 'invalid-email') {
         errorMessage = "Email không hợp lệ.";
       }
+      // if(context!=))
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(errorMessage),
       ));
