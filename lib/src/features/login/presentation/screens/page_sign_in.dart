@@ -41,10 +41,10 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _onSignIn() {
-    FocusScope.of(context).unfocus();
-    _authenticationBloc.signIn(_loginField.text, _passField.text);
-  }
+  // void _onSignIn() {
+  //   FocusScope.of(context).unfocus();
+  //   _authenticationBloc.signIn(_loginField.text, _passField.text);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +56,12 @@ class _LoginPageState extends State<LoginPage> {
         body: StreamBuilder<AuthenState>(
           stream: _authenticationBloc.authSate,
           builder: (context, snapshot) {
-            final state =
-                snapshot.hasData ? snapshot.data : AuthenState.initial;
+            // final state =
+            //     snapshot.hasData ? snapshot.data : AuthenState.initial;
             return Column(
               children: [
                 const AppAppBar(),
-                Center(
-                  child: Assets.svg.logo.svg(width: 60)
-                ),
+                Center(child: Assets.svg.logo.svg(width: 60)),
                 const SizedBox(
                   height: 30,
                 ),
@@ -214,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           IconButton(
                             style: ButtonStyle(
-                              iconSize: MaterialStateProperty.all(70),
+                              iconSize: WidgetStateProperty.all(70),
                             ),
                             onPressed: test,
                             icon: const Icon(Icons.apple),

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_application_1/generates/assets.gen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../features/login/presentation/screens/page_sign_in.dart';
 import '../../common/widgets/common_appbar.dart';
@@ -27,17 +25,15 @@ class _ChooseModelState extends State<ChooseMode> {
             const AppAppBar(),
             Assets.images.chooesMode.image(),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
               child: Column(
                 children: [
                   const SizedBox(
                     height: 60,
                   ),
                   Align(
-                    alignment: Alignment.topCenter,
-                    child: Assets.svg.logo.svg()
-                  ),
+                      alignment: Alignment.topCenter,
+                      child: Assets.svg.logo.svg()),
                   const Spacer(),
                   Center(
                     child: Column(
@@ -122,13 +118,13 @@ class _ChooseModelState extends State<ChooseMode> {
                           children: [
                             Text(
                               "Chế độ sáng",
-                              style: TextStyle(
-                                  fontSize: 18, color: Colors.white),
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
                             ),
                             Text(
                               "Chế độ tối",
-                              style: TextStyle(
-                                  fontSize: 18, color: Colors.white),
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
                             ),
                           ],
                         ),
