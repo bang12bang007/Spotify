@@ -17,9 +17,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
-        ? HydratedStorageDirectory.web
-        : HydratedStorageDirectory(
-            (await getApplicationDocumentsDirectory()).path),
+        ? HydratedStorage.webStorageDirectory
+        : await getApplicationDocumentsDirectory(),
   );
   HydratedBloc.storage = storage;
 
