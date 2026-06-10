@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/generates/assets.gen.dart';
 import 'package:flutter_application_1/src/core/presentations/screens/page_choose_mode.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../common/widgets/common_button.dart';
 
@@ -21,8 +19,7 @@ class _StartedPageState extends State<StartedPage> {
         child: Stack(
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
               child: Column(
                 children: [
                   const SizedBox(
